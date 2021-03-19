@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table'
 
 import { v4 as uuidv4 } from 'uuid';
 
-function ShiftItem({item}) {
+function ShiftItem({item, app}) {
     return (
         <tr>
         <td width="50%">
@@ -18,7 +18,8 @@ function ShiftItem({item}) {
             {item.when}
         </td>
         <td>
-            <Button variant="outline-primary">Sign Up!</Button>{' '}
+            <Button variant="outline-success">Edit</Button>
+            <Button variant="outline-danger" onClick={() => {app.delete(item.id)}}>X</Button>
         </td>
         </tr>
     )
@@ -31,7 +32,7 @@ export default class ShiftList extends React.Component {
     }
 
     doAdd() {
-        this.props.add(this.props.role, {
+        this.props.app.add(this.props.role, {
             id: uuidv4(),
             name: "New Shift",
             description: "Describe the shift.",
@@ -60,7 +61,7 @@ export default class ShiftList extends React.Component {
                         <ShiftItem 
                             key={shift.id}
                             item={shift}
-                            upd={(id,key,value) => this.update(id,key,value)}
+                            app={this.props.app}
                         />
                         )
                     })

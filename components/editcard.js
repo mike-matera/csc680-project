@@ -26,7 +26,7 @@ class EditCard extends React.Component {
     }
 
     handleChange(event) {
-        this.props.upd(this.props.item.id, event.target.id, event.target.value)
+        this.props.app.update(this.props.item.id, event.target.id, event.target.value)
     }
 
     handleSubmit(event) {

@@ -26,11 +26,24 @@ export default class VolunteerApp extends React.Component {
     }
 
     add(parent, item) {
-        console.log("adding: ", item, " to: ", parent)
         var newstate = this.state 
         newstate.db[item.id] = item 
         newstate.db[parent].children.push(item.id)
         console.log(newstate)
+        this.setState(newstate)
+    }
+
+    delete(item) {
+        var newstate = this.state 
+        for (const dbitem in newstate.db) {
+            if (Array.isArray(newstate.db[dbitem].children)) {
+                var got = newstate.db[dbitem].children.findIndex(x => x == item)
+                if (got >= 0) {
+                    newstate.db[dbitem].children.splice(got,1)
+                }
+            }
+        }
+        delete newstate.db[item]
         this.setState(newstate)
     }
 
@@ -51,20 +64,18 @@ export default class VolunteerApp extends React.Component {
                         <EditCard 
                             key={event}
                             item={this.state.db[event]}
-                            upd={(id,key,value) => this.update(id,key,value)}
-                            add={(parent,item) => this.add(parent, item)}
+                            app={this}
                             content={
                                 this.state.db[event].children.map((role) => {
                                     return (
                                         <EditCard 
                                         key={role}
                                         item={this.state.db[role]}
-                                        upd={(id,key,value) => this.update(id,key,value)}
-                                        add={(parent,item) => this.add(parent, item)}
+                                        app={this}
                                         content={
                                             <ShiftList 
                                                 role={role} 
-                                                add={(parent,item) => this.add(parent, item)}
+                                                app={this}
                                                 shifts={this.flatten(this.state.db[role].children)}/>
                                         }/>
                                     )
