@@ -59,8 +59,8 @@ export default class VolunteerApp extends React.Component {
                                         <EditCard 
                                         key={role}
                                         item={this.state.db[role]}
-                                        upd={(id,key,value) => this.add(id,key,value)}
-                                        add={(parent,item) => this.update(parent, item)}
+                                        upd={(id,key,value) => this.update(id,key,value)}
+                                        add={(parent,item) => this.add(parent, item)}
                                         content={
                                             <ShiftList 
                                                 role={role} 
