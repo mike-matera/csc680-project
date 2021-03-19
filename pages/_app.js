@@ -1,7 +1,7 @@
 import '../style.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// import App from 'next/app'
+import App from 'next/app'
 
 function MyApp({ Component, pageProps }) {
     return <Component {...pageProps} />

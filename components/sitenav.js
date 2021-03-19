@@ -1,7 +1,7 @@
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
-export function SiteNav(config) {
+export default function SiteNav(config) {
     return (
 <>
   <Navbar bg="dark" variant="dark">
