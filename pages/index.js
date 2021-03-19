@@ -25,24 +25,19 @@ export default class VolunteerApp extends React.Component {
         this.setState(newstate)
     }
 
-    add(parent, item) {
+    add(item) {
         var newstate = this.state 
         newstate.db[item.id] = item 
-        newstate.db[parent].children.push(item.id)
+        newstate.db[item.parent].children.push(item.id)
         console.log(newstate)
         this.setState(newstate)
     }
 
     delete(item) {
         var newstate = this.state 
-        for (const dbitem in newstate.db) {
-            if (Array.isArray(newstate.db[dbitem].children)) {
-                var got = newstate.db[dbitem].children.findIndex(x => x == item)
-                if (got >= 0) {
-                    newstate.db[dbitem].children.splice(got,1)
-                }
-            }
-        }
+        var parent = newstate.db[item.parent]
+        var got = parent.children.findIndex(x => x == item)
+        parent.children.splice(got,1)
         delete newstate.db[item]
         this.setState(newstate)
     }
@@ -108,6 +103,7 @@ export async function getStaticProps() {
                     id: event1,
                     name: "Summer Fundraiser",
                     description: "Our big annual fundraiser.",
+                    parent: null, 
                     children: [
                         role1, role2,
                     ],
@@ -116,6 +112,7 @@ export async function getStaticProps() {
                     id: role1,
                     name: "Gate",
                     description: "Manage gate operations.",
+                    parent: event1, 
                     children: [
                        job1, job2, 
                     ],
@@ -124,6 +121,7 @@ export async function getStaticProps() {
                     id: role2,
                     name: "Kitchen",
                     description: "Work the kitchen.",
+                    parent: event1, 
                     children: [
                         job3, job4
                     ]
@@ -133,28 +131,32 @@ export async function getStaticProps() {
                     name: "Ticket taker",
                     description: "Take tickets and give wristbands.",
                     location: "At the gate",
-                    when: "03/19/2021"
+                    when: "03/19/2021",
+                    parent: role1, 
                 },
                 [job2]: {
                     id: job2,
                     name: "Greeter",
                     description: "Welcome people and show them where to go.",
                     location: "Inside the gate",
-                    when: "03/19/2021"
+                    when: "03/19/2021",
+                    parent: role1, 
                 },
                 [job3]: {
                     id: job3,
                     name: "Line cook.",
                     description: "Cook food for the guests.",
                     location: "In the kitchen",
-                    when: "03/19/2021"
+                    when: "03/19/2021",
+                    parent: role2, 
                 },
                 [job4]: {
                     id: job4,
                     name: "Server",
                     description: "Serve food as people arrive.",
                     location: "The dining room",
-                    when: "03/19/2021"
+                    when: "03/19/2021",
+                    parent: role2, 
                 },
 
             },

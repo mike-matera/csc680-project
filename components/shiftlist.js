@@ -85,7 +85,7 @@ export class ShiftRow extends React.Component {
                 </td>
                 <td>
                     <Button variant="outline-success" onClick={() => {this.doEdit()}}>Edit</Button>
-                    <Button variant="outline-danger" onClick={() => {this.props.app.delete(this.props.shift.id)}}>X</Button>
+                    <Button variant="outline-danger" onClick={() => {this.props.app.delete(this.props.shift)}}>X</Button>
                 </td>
                 </tr>
             )        
@@ -102,13 +102,13 @@ export default class ShiftList extends React.Component {
 
     doAdd() {
         const now = new Date()
-        this.props.app.add(this.props.role, {
+        this.props.app.add({
             id: uuidv4(),
             name: "New Shift",
             description: "Describe the shift.",
             location: "Where does it happen.",
-            when: now.toLocaleDateString() + " " + now.toLocaleTimeString()
-
+            when: now.toLocaleDateString() + " " + now.toLocaleTimeString(),
+            parent: this.props.role,
         })
     }
 
