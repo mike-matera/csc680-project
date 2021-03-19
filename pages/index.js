@@ -19,9 +19,9 @@ export default class VolunteerApp extends React.Component {
         }
     }
 
-    update(id, key, value) {
+    update(item) {
         var newstate = this.state 
-        newstate.db[id][key] = value
+        newstate.db[item.id] = item
         this.setState(newstate)
     }
 
@@ -133,28 +133,28 @@ export async function getStaticProps() {
                     name: "Ticket taker",
                     description: "Take tickets and give wristbands.",
                     location: "At the gate",
-                    when: "Now!"
+                    when: "03/19/2021"
                 },
                 [job2]: {
                     id: job2,
                     name: "Greeter",
                     description: "Welcome people and show them where to go.",
                     location: "Inside the gate",
-                    when: "Now!"
+                    when: "03/19/2021"
                 },
                 [job3]: {
                     id: job3,
                     name: "Line cook.",
                     description: "Cook food for the guests.",
                     location: "In the kitchen",
-                    when: "Now!"
+                    when: "03/19/2021"
                 },
                 [job4]: {
                     id: job4,
                     name: "Server",
                     description: "Serve food as people arrive.",
                     location: "The dining room",
-                    when: "Now!"
+                    when: "03/19/2021"
                 },
 
             },
