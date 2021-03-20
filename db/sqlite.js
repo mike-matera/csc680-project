@@ -42,17 +42,17 @@ export function create_db() {
 }
 
 // Insert a new row into table...
-export function insert(table, data) {
+export function insert(item) {
     const db = check_db();
 }
 
 // Update a row... 
-export function update(table, data) {
+export function update(item) {
     const db = check_db();
 }
 
 // Delete a row... 
-export function del(table, data) {
+export function del(item) {
     const db = check_db();
 }
 
