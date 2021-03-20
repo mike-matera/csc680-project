@@ -101,6 +101,7 @@ export async function getStaticProps() {
             db: {
                 [event1]: {
                     id: event1,
+                    kind: 'event',
                     name: "Summer Fundraiser",
                     description: "Our big annual fundraiser.",
                     parent: null, 
@@ -110,6 +111,7 @@ export async function getStaticProps() {
                 },
                 [role1]: {
                     id: role1,
+                    kind: 'role',
                     name: "Gate",
                     description: "Manage gate operations.",
                     parent: event1, 
@@ -119,6 +121,7 @@ export async function getStaticProps() {
                 },
                 [role2]: {
                     id: role2,
+                    kind: 'role',
                     name: "Kitchen",
                     description: "Work the kitchen.",
                     parent: event1, 
@@ -128,6 +131,7 @@ export async function getStaticProps() {
                 },
                 [job1]: {
                     id: job1,
+                    kind: 'job',
                     name: "Ticket taker",
                     description: "Take tickets and give wristbands.",
                     location: "At the gate",
@@ -136,6 +140,7 @@ export async function getStaticProps() {
                 },
                 [job2]: {
                     id: job2,
+                    kind: 'job',
                     name: "Greeter",
                     description: "Welcome people and show them where to go.",
                     location: "Inside the gate",
@@ -144,6 +149,7 @@ export async function getStaticProps() {
                 },
                 [job3]: {
                     id: job3,
+                    kind: 'job',
                     name: "Line cook.",
                     description: "Cook food for the guests.",
                     location: "In the kitchen",
@@ -152,13 +158,13 @@ export async function getStaticProps() {
                 },
                 [job4]: {
                     id: job4,
+                    kind: 'job',
                     name: "Server",
                     description: "Serve food as people arrive.",
                     location: "The dining room",
                     when: "03/19/2021",
                     parent: role2, 
                 },
-
             },
         },
     }
