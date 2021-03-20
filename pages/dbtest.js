@@ -4,7 +4,7 @@ import useSWR from 'swr'
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 function pingDB() {
-    const { data, error } = useSWR(`/api/ping`, fetcher)
+    const { data, error } = useSWR(`/api/reset`, fetcher)
   
     return {
       pong: data,

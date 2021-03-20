@@ -1,10 +1,6 @@
 
 import db from 'db/sqlite'
 
-function resetdb() {
-
-}
-
 
 export default function handler(req, res) {
 
@@ -12,22 +8,20 @@ export default function handler(req, res) {
     if (req.query.op == 'ping') {
         res.status(200).json({hello:'foo'})
     }
+    else if (req.query.op == 'reset') {
+        create_db()
+        res.status(200).json({status:'ok'})
+    }
+    else if (req.query.op == 'create') {
+    }
+    else if (req.query.op == 'update') {
+    }
+    else if (req.query.op == 'delete') {
+    }
+    else if (req.query.op == 'query') {
+        res.status(200).json(query())
+    }
     else{
         res.status(405).json()
     }
-
-/*     db.serialize(function() {
-        db.run("CREATE TABLE lorem (info TEXT)");
-      
-        var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-        for (var i = 0; i < 10; i++) {
-            stmt.run("Ipsum " + i);
-        }
-        stmt.finalize();
-      
-        db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
-            console.log(row.id + ": " + row.info);
-        });
-    });
- */      
 }

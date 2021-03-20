@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import Container from 'react-bootstrap/Container'
 
 import React from 'react';
@@ -8,6 +6,7 @@ import SiteNav from 'components/sitenav'
 import EditCard from 'components/editcard'
 import ShiftList from 'components/shiftlist'
 
+import { query } from 'db/sqlite'
 
 export default class VolunteerApp extends React.Component {
 
@@ -86,86 +85,6 @@ export default class VolunteerApp extends React.Component {
     }
 }
 
-// This function gets called at build time
-export async function getStaticProps() {
-    const event1 = uuidv4()
-    const role1 = uuidv4()
-    const role2 = uuidv4()
-    const job1 = uuidv4()
-    const job2 = uuidv4()
-    const job3 = uuidv4()
-    const job4 = uuidv4()
-    return {
-        props: {
-            page: [event1],
-            db: {
-                [event1]: {
-                    id: event1,
-                    kind: 'event',
-                    name: "Summer Fundraiser",
-                    description: "Our big annual fundraiser.",
-                    parent: null, 
-                    children: [
-                        role1, role2,
-                    ],
-                },
-                [role1]: {
-                    id: role1,
-                    kind: 'role',
-                    name: "Gate",
-                    description: "Manage gate operations.",
-                    parent: event1, 
-                    children: [
-                       job1, job2, 
-                    ],
-                },
-                [role2]: {
-                    id: role2,
-                    kind: 'role',
-                    name: "Kitchen",
-                    description: "Work the kitchen.",
-                    parent: event1, 
-                    children: [
-                        job3, job4
-                    ]
-                },
-                [job1]: {
-                    id: job1,
-                    kind: 'job',
-                    name: "Ticket taker",
-                    description: "Take tickets and give wristbands.",
-                    location: "At the gate",
-                    when: "03/19/2021",
-                    parent: role1, 
-                },
-                [job2]: {
-                    id: job2,
-                    kind: 'job',
-                    name: "Greeter",
-                    description: "Welcome people and show them where to go.",
-                    location: "Inside the gate",
-                    when: "03/19/2021",
-                    parent: role1, 
-                },
-                [job3]: {
-                    id: job3,
-                    kind: 'job',
-                    name: "Line cook.",
-                    description: "Cook food for the guests.",
-                    location: "In the kitchen",
-                    when: "03/19/2021",
-                    parent: role2, 
-                },
-                [job4]: {
-                    id: job4,
-                    kind: 'job',
-                    name: "Server",
-                    description: "Serve food as people arrive.",
-                    location: "The dining room",
-                    when: "03/19/2021",
-                    parent: role2, 
-                },
-            },
-        },
-    }
+export async function getServerSideProps() {
+  return { props: query() }
 }
