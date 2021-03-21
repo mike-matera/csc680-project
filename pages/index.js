@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container'
 
 import React from 'react';
+import Button from 'react-bootstrap/Button'
 
 import SiteNav from 'components/sitenav'
 import EditCard from 'components/editcard'
@@ -18,27 +19,55 @@ export default class VolunteerApp extends React.Component {
         }
     }
 
+    reset_db() {
+        fetch('/api/reset')
+        .then(r => r.json())
+        .then(data => {
+            this.setState(data)
+        })
+    }
+
     update(item) {
         var newstate = this.state 
         newstate.db[item.id] = item
         this.setState(newstate)
+        fetch('/api/update', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
     }
 
     add(item) {
         var newstate = this.state 
         newstate.db[item.id] = item 
         newstate.db[item.parent].children.push(item.id)
-        console.log(newstate)
         this.setState(newstate)
+        fetch('/api/insert', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
     }
 
     delete(item) {
         var newstate = this.state 
         var parent = newstate.db[item.parent]
-        var got = parent.children.findIndex(x => x == item)
+        var got = parent.children.findIndex(x => x == item.id)
         parent.children.splice(got,1)
         delete newstate.db[item]
         this.setState(newstate)
+        fetch('/api/delete', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
     }
 
     flatten(ids) {
@@ -52,6 +81,7 @@ export default class VolunteerApp extends React.Component {
             <>
             <SiteNav/>
             <Container fluid>
+            <Button variant="danger" onClick={() => this.reset_db()}>Reset DB</Button>
             {
                 this.state.page.map((event) => {
                     return (
@@ -86,5 +116,5 @@ export default class VolunteerApp extends React.Component {
 }
 
 export async function getServerSideProps() {
-  return { props: query() }
+  return { props: await query() }
 }

@@ -34,7 +34,7 @@ export class ShiftRow extends React.Component {
     handleChange(event) {
         const updated = this.props.shift 
         if (event instanceof Date) {            
-            updated.when = event.toLocaleDateString() + " " + event.toLocaleTimeString()
+            updated.starttime = event.toLocaleDateString() + " " + event.toLocaleTimeString()
         }
         else {
             updated[event.target.id] = event.target.value    
@@ -58,8 +58,8 @@ export class ShiftRow extends React.Component {
                     <input type="text" id="location" value={this.props.shift.location} onChange={this.handleChange}/><br/>
                 </td>
                 <td>
-                <DatePicker id="when"
-                    selected={new Date(this.props.shift.when)}
+                <DatePicker id="starttime"
+                    selected={new Date(this.props.shift.starttime)}
                     onChange={this.handleChange} //only when value has changed
                     showTimeSelect showTimeInput
                 />                    
@@ -81,7 +81,7 @@ export class ShiftRow extends React.Component {
                     {this.props.shift.location}
                 </td>
                 <td>
-                    {this.props.shift.when}
+                    {this.props.shift.starttime}
                 </td>
                 <td>
                     <Button variant="outline-success" onClick={() => {this.doEdit()}}>Edit</Button>
@@ -104,23 +104,23 @@ export default class ShiftList extends React.Component {
         const now = new Date()
         this.props.app.add({
             id: uuidv4(),
+            kind: 'shift',
             name: "New Shift",
             description: "Describe the shift.",
             location: "Where does it happen.",
-            when: now.toLocaleDateString() + " " + now.toLocaleTimeString(),
+            starttime: now.toLocaleDateString() + " " + now.toLocaleTimeString(),
             parent: this.props.role,
         })
     }
 
     handleSubmit(event) {
-        this.doUpdate()
         event.preventDefault()
     }
 
     render() {
         const shifts = this.props.shifts
         return (
-            <form onSumbit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
             <Table striped hover className="shiftTable">
                 <thead>
                 <tr>
@@ -134,7 +134,7 @@ export default class ShiftList extends React.Component {
             {
                 shifts.map((shift) => {
                     return (
-                        <ShiftRow app={this.props.app} shift={shift}/>
+                        <ShiftRow key={shift.id} app={this.props.app} shift={shift}/>
                     )
                 })            
             }
