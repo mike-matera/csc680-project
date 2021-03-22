@@ -8,7 +8,7 @@ var _db = null;
 async function check_db() {
     if (_sqlite3 == null) {
         _sqlite3 = require('sqlite-async')
-        _db = await _sqlite3.open('signup.sqlite')
+        _db = await _sqlite3.open(':memory:')
     }
     return _db
 }
