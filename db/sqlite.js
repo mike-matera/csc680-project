@@ -16,11 +16,15 @@ async function check_db() {
 // Completley reset the db schema.
 export async function create_db() {
     const db = await check_db();
-    const event1 = uuidv4()
+    const event1 = uuidv4();
+    const role1 = uuidv4();
+    const shift1 = uuidv4();
 
     let sql = `
     
     /* Drop all tables so that the DB is reset */
+    drop table if exists shift;
+    drop table if exists role;
     drop table if exists event; 
 
     /* Create all tables */
@@ -30,8 +34,29 @@ export async function create_db() {
         description varchar(128)
     ); 
 
+    create table role (
+        id varchar(36) primary key, 
+        name vharchar(64),
+        description varchar(128),
+        eventid varchar(36),
+        constraint sk_role_1 foreign key (eventid) references event(id) 
+    ); 
+
+    create table shift (
+        id varchar(36) primary key, 
+        name vharchar(64),
+        description varchar(128),
+        location varchar(36),
+        starttime date(10),
+        roleid varchar(36),
+        constraint sk_shift_1 foreign key (roleid) references role(id) 
+    );
+
     /* Add sample data */
     insert into event values ('${event1}', 'Summer Fundraiser', 'Our big annual fundraiser.');
+    insert into role values ('${role1}', 'Chef', 'Works in kitchen.', '${event1}');
+    insert into shift values ('${shift1}', 'Day', 'Hours 8-12', 'Front Gate', '2021-03-22','${role1}');
+    
     `
     console.log('resetting db')
     var got = await db.exec(sql)
@@ -46,6 +71,7 @@ export async function insert(item) {
         query = `insert into event values ('${item.id}', '${item.name}', '${item.description}');`
     }
     else if (item.kind == 'role') {
+        query = `insert into role values ('${item.id}', '${item.name}', '${item.description}', '${item.eventid}');`
     }
     else if (item.kind == 'shift') {
     }
