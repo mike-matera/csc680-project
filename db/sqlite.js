@@ -74,6 +74,8 @@ export async function insert(item) {
         query = `insert into role values ('${item.id}', '${item.name}', '${item.description}', '${item.eventid}');`
     }
     else if (item.kind == 'shift') {
+        query = `insert into shift values ('${item.id}', '${item.name}', '${item.description}', '${item.location}',
+        '${item.starttime}', '${item.roleid}');`
     }
     console.log("Query:", query)
     var got = await db.exec(query)
@@ -88,6 +90,7 @@ export async function update(item) {
         query = `update event set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
     }
     else if (item.kind == 'role') {
+        query = `update role set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
     }
     else if (item.kind == 'shift') {
     }
