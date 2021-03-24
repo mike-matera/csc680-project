@@ -90,9 +90,13 @@ export async function update(item) {
         query = `update event set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
     }
     else if (item.kind == 'role') {
-        query = `update role set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
+        //not sure how to fill out for eventid
+        //query = `update role set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
     }
     else if (item.kind == 'shift') {
+        //same for roleid
+        //query = `update shift set name = '${item.name}', description = '${item.description}, 
+       // location = '${item.location}', starttime = '${item.starttime}' where id = '${item.id}';`
     }
     console.log("Query:", query)
     var got = await db.exec(query)
@@ -103,6 +107,18 @@ export async function del(item) {
     console.log("Delete:", item)
     const db = await check_db();
     var query
+    if (item.kind == 'event') {
+        query = `delete event set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
+    }
+    else if (item.kind == 'role') {
+        //not sure how to fill out for eventid
+        //query = `delete role set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
+    }
+    else if (item.kind == 'shift') {
+        //same for roleid
+        //query = `delete shift set name = '${item.name}', description = '${item.description}, 
+       // location = '${item.location}', starttime = '${item.starttime}' where id = '${item.id}';`
+    }
     console.log("Query:", query)
     var got = await db.exec(query)
 }
