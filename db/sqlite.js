@@ -55,7 +55,7 @@ export async function create_db() {
     /* Add sample data */
     insert into event values ('${event1}', 'Summer Fundraiser', 'Our big annual fundraiser.');
     insert into role values ('${role1}', 'Chef', 'Works in kitchen.', '${event1}');
-    insert into shift values ('${shift1}', 'Day', 'Hours 8-12', 'Front Gate', '2021-03-22','${role1}');
+    insert into shift values ('${shift1}', 'Day', 'Hours 8-12', 'Front Gate', '2021-03-22', '${role1}');
     
     `
     console.log('resetting db')
@@ -93,8 +93,7 @@ export async function update(item) {
         query = `update role set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
     }
     else if (item.kind == 'shift') {
-        query = `update shift set name = '${item.name}', description = '${item.description}, 
-        location = '${item.location}', starttime = '${item.starttime}' where id = '${item.id}';`
+        query = `update shift set name = '${item.name}', description = '${item.description}', location = '${item.location}', starttime = '${item.starttime}' where id = '${item.id}';`
     }
     console.log("Query:", query)
     var got = await db.exec(query)
