@@ -8,7 +8,8 @@
     "build": "rm -rf ./build && NODE_ENV=production next build",
     "start": "next start -p $PORT",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "npm run build && gcloud app deploy --project csc680-project"
+    "deploy": "npm run build && gcloud app deploy --project csc680-project",
+    "browse": "gcloud app browse  --project csc680-project"
   },
   "keywords": [],
   "author": "",

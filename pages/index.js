@@ -16,6 +16,7 @@ export default class VolunteerApp extends React.Component {
         this.state = {
             page: props.page,
             db: props.db,
+            status: props.status,
         }
     }
 
@@ -77,6 +78,9 @@ export default class VolunteerApp extends React.Component {
     }
 
     render() {
+        if (this.state.status == 'error') {
+            this.reset_db()
+        }
         return (
             <>
             <SiteNav/>
