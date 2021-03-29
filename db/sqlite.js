@@ -8,7 +8,7 @@ var _db = null;
 async function check_db() {
     if (_sqlite3 == null) {
         _sqlite3 = require('sqlite-async')
-        _db = await _sqlite3.open('/tmp/db.sqlite')
+        _db = await _sqlite3.open(':memory:')
     }
     return _db
 }
@@ -75,7 +75,7 @@ export async function insert(item) {
     }
     else if (item.kind == 'shift') {
         query = `insert into shift values ('${item.id}', '${item.name}', '${item.description}', '${item.location}',
-        '${item.starttime}', '${item.roleid}');`
+        '${item.starttime}', '${item.parent}');`
     }
     console.log("Query:", query)
     var got = await db.exec(query)
@@ -93,7 +93,7 @@ export async function update(item) {
         query = `update role set name = '${item.name}', description = '${item.description}' where id = '${item.id}';`
     }
     else if (item.kind == 'shift') {
-        query = `update shift set name = '${item.name}', description = '${item.description}, location = '${item.location}', starttime = '${item.starttime}' where id = '${item.id}';`
+        query = `update shift set name = '${item.name}', description = '${item.description}', location = '${item.location}', starttime = '${item.starttime}' where id = '${item.id}';`
     }
     console.log("Query:", query)
     var got = await db.exec(query)
@@ -111,7 +111,7 @@ export async function del(item) {
         query = `delete from shift where id = '${item.id}';`
     }
     else if (item.kind == 'shift') {       
-       query = `delete from shift where id where id = '${item.id}';`
+       query = `delete from shift where id = '${item.id}';`
     }
     console.log("Query:", query)
     var got = await db.exec(query)
